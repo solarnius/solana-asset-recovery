@@ -1,19 +1,20 @@
-'use client';
+"use client";
 
-import { PublicKey } from '@solana/web3.js';
-import { useMemo } from 'react';
+import { PublicKey } from "@solana/web3.js";
+import { useMemo } from "react";
 
-import { useParams } from 'next/navigation';
+import { useParams } from "next/navigation";
 
-import { ExplorerLink } from '../cluster/cluster-ui';
-import { AppHero, ellipsify } from '../ui/ui-layout';
+import { ExplorerLink } from "../cluster/cluster-ui";
+import { AppHero, ellipsify } from "../ui/ui-layout";
 import {
   AccountBalance,
   AccountButtons,
   AccountStakeAccounts,
   AccountTokens,
   AccountTransactions,
-} from './account-ui';
+  AccountCnfts,
+} from "./account-ui";
 
 export default function AccountDetailFeature() {
   const params = useParams();
@@ -50,6 +51,7 @@ export default function AccountDetailFeature() {
       </AppHero>
       <div className="space-y-8">
         <AccountTokens address={address} />
+        <AccountCnfts address={address} />
         <AccountStakeAccounts address={address} />
         {/* <AccountTransactions address={address} /> */}
       </div>

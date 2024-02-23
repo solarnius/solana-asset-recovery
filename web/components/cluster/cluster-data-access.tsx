@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
-import { clusterApiUrl, Connection } from '@solana/web3.js';
-import { atom, useAtomValue, useSetAtom } from 'jotai';
-import { atomWithStorage } from 'jotai/utils';
-import { createContext, ReactNode, useContext } from 'react';
-import toast from 'react-hot-toast';
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+import { clusterApiUrl, Connection } from "@solana/web3.js";
+import { atom, useAtomValue, useSetAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
+import { createContext, ReactNode, useContext } from "react";
+import toast from "react-hot-toast";
 
 export interface Cluster {
   name: string;
@@ -15,10 +15,10 @@ export interface Cluster {
 }
 
 export enum ClusterNetwork {
-  Mainnet = 'mainnet-beta',
-  Testnet = 'testnet',
-  Devnet = 'devnet',
-  Custom = 'custom',
+  Mainnet = "mainnet-beta",
+  Testnet = "testnet",
+  Devnet = "devnet",
+  Custom = "custom",
 }
 export function toWalletAdapterNetwork(
   cluster?: ClusterNetwork
@@ -37,29 +37,31 @@ export function toWalletAdapterNetwork(
 
 export const defaultClusters: Cluster[] = [
   {
-    name: 'mainnet',
-    endpoint: process.env.NEXT_PUBLIC_RPC_URL?process.env.NEXT_PUBLIC_RPC_URL: 'https://mainnet.helius-rpc.com/?api-key=e78cc375-92b4-42d9-a00f-d42c497da094',
+    name: "mainnet",
+    endpoint: process.env.NEXT_PUBLIC_RPC_URL
+      ? process.env.NEXT_PUBLIC_RPC_URL
+      : "https://lilias-0g0npx-fast-devnet.helius-rpc.com/",
     network: ClusterNetwork.Mainnet,
   },
   {
-    name: 'devnet',
-    endpoint: clusterApiUrl('devnet'),
+    name: "devnet",
+    endpoint: clusterApiUrl("devnet"),
     network: ClusterNetwork.Devnet,
   },
-  { name: 'local', endpoint: 'http://localhost:8899' },
+  { name: "local", endpoint: "http://localhost:8899" },
   {
-    name: 'testnet',
-    endpoint: clusterApiUrl('testnet'),
+    name: "testnet",
+    endpoint: clusterApiUrl("testnet"),
     network: ClusterNetwork.Testnet,
   },
 ];
 
 const clusterAtom = atomWithStorage<Cluster>(
-  'solana-cluster',
+  "solana-cluster",
   defaultClusters[0]
 );
 const clustersAtom = atomWithStorage<Cluster[]>(
-  'solana-clusters',
+  "solana-clusters",
   defaultClusters
 );
 
@@ -123,21 +125,21 @@ export function useCluster() {
 }
 
 function getClusterUrlParam(cluster: Cluster): string {
-  let suffix = '';
+  let suffix = "";
   switch (cluster.network) {
     case ClusterNetwork.Devnet:
-      suffix = 'devnet';
+      suffix = "devnet";
       break;
     case ClusterNetwork.Mainnet:
-      suffix = '';
+      suffix = "";
       break;
     case ClusterNetwork.Testnet:
-      suffix = 'testnet';
+      suffix = "testnet";
       break;
     default:
       suffix = `custom&customUrl=${encodeURIComponent(cluster.endpoint)}`;
       break;
   }
 
-  return suffix.length ? `?cluster=${suffix}` : '';
+  return suffix.length ? `?cluster=${suffix}` : "";
 }
